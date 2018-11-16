@@ -1,5 +1,5 @@
 /*Segment Tree implementation *.
-/* gives TLE */
+/* WA */
 #include <bits/stdc++.h>
 #define FOR(i,a,b) for(int i = (a); i < (b); i++)
 #define ll long long
@@ -38,25 +38,33 @@ ll query(int v, int tl, int tr, int l, int r)
 int main()
 {
     int n, c, cc=0, l, r, q;
+    list<int> nexti;
+    list<int>::iterator it;
     
     while(scanf("%d", &n) != EOF)
     {
+        nexti.clear();
         printf("Case #%d:\n", ++cc);
         memset(t, 0, 4*n*sizeof(int));
-        FOR(i, 0, n) scanf("%d", &a[i]);
+        FOR(i, 0, n) { scanf("%d", &a[i]); if(a[i] > 1) nexti.push_back(i);}
         build(1, 0, n-1);
 
         scanf("%d", &q);
         FOR(i, 0, q)
         {
-            //cout << query(1,0,n-1,0,n-1) << '\n';
-            //FOR(j, 0, n) cout << a[j] << ' ';
-            //cout << '\n';
-
             scanf("%d%d%d", &c, &l, &r); l--,r--;
             if(l>r) swap(l, r);
             if(c) printf("%lli\n", query(1, 0, n-1, l, r));
-            else FOR(j, l, r+1) if(a[j]>1) update(1, 0, n-1, j, a[j]=sqrt(a[j]));
+            else
+            {
+                for(it = lower_bound(nexti.begin(), nexti.end(), l); it != nexti.end() && (*it) <= r;)
+                {
+                    update(1, 0, n-1, *it, a[*it]=sqrt(a[*it]));
+                    if(a[*it] == 1) it = nexti.erase(it);
+                    else it++;
+                }
+            }
+ 
         }
         printf("\n");
     }

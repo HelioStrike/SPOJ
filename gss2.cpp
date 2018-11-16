@@ -1,4 +1,3 @@
-/* WA at 9th test case */
 #include <bits/stdc++.h>
 #define FOR(i,a,b) for(int i = (a); i < (b); i++)
 #define MAX3(a,b,c) ((a)>(b))? (((a)>(c))?(a):(c)): (((b)>(c))?(b):(c))
@@ -69,8 +68,6 @@ int main()
     { 
         update(1, 0, n-1, pre[a[i]+MAXN]+1, i, a[i]);
         
-        //cout << query(1, 0, n-1, i, i) << ' ';
-
         pre[a[i]+MAXN] = i;
         while(qs[curr].first.second == i)
         {
@@ -78,7 +75,6 @@ int main()
             curr++;
         }
     }
-    //cout << '\n';
 
     FOR(i, 0, q) cout << ans[i] << '\n';
 

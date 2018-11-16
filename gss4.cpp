@@ -17,12 +17,12 @@ void build(int v, int tl, int tr)
     t[v] = t[v*2] + t[v*2+1];
 }
 
-void update(int v, int tl, int tr, int pos)
+void update(int v, int tl, int tr, int pos, int val)
 {
-    if(tl == tr) { t[v] = sqrt(t[v]); return;}
+    if(tl == tr) { t[v] = val; return;}
     int tm = (tl+tr)/2;
-    if(pos < tm) update(v*2, tl, tm, pos);
-    else update(v*2+1, tm+1, tr, pos);
+    if(pos <= tm) update(v*2, tl, tm, pos, val);
+    else update(v*2+1, tm+1, tr, pos, val);
     t[v] = t[v*2]+t[v*2+1];
 }
 
@@ -36,18 +36,27 @@ ll query(int v, int tl, int tr, int l, int r)
 
 int main()
 {
-    int n, c, l, r, q; cin >> n; FOR(i, 0, n) cin >> a[i];
-    build(1, 0, n-1);
-
-    //FOR(i, 0, 10) cout << t[i] << ' ';
-    //cout << '\n';
-
-    cin >> q;
-    FOR(i, 0, q)
+    int n, c, cc=0, l, r, q;
+    
+    while(scanf("%d", &n) != EOF)
     {
-        cin >> c >> l >> r; l--, r--;
-        if(l>r) swap(l, r);
-        if(c) cout << query(1, 0, n-1, l, r) << '\n';
-        else FOR(j, l-1, r) update(1, 0, n-1, j);
+        printf("Case #%d:\n", ++cc);
+        memset(t, 0, 4*n*sizeof(int));
+        FOR(i, 0, n) scanf("%d", &a[i]);
+        build(1, 0, n-1);
+
+        scanf("%d", &q);
+        FOR(i, 0, q)
+        {
+            //cout << query(1,0,n-1,0,n-1) << '\n';
+            //FOR(j, 0, n) cout << a[j] << ' ';
+            //cout << '\n';
+
+            scanf("%d%d%d", &c, &l, &r); l--,r--;
+            if(l>r) swap(l, r);
+            if(c) printf("%lli\n", query(1, 0, n-1, l, r));
+            else FOR(j, l, r+1) if(a[j]>1) update(1, 0, n-1, j, a[j]=sqrt(a[j]));
+        }
+        printf("\n");
     }
 }

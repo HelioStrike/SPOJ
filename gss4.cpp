@@ -1,12 +1,11 @@
-/*Segment Tree implementation *.
-/* WA */
+/*Segment Tree implementation */
 #include <bits/stdc++.h>
 #define FOR(i,a,b) for(int i = (a); i < (b); i++)
 #define ll long long
 #define MAXN 100010
 using namespace std;
 
-int a[MAXN];
+ll a[MAXN];
 ll t[4*MAXN];
 
 void build(int v, int tl, int tr)
@@ -46,7 +45,7 @@ int main()
         nexti.clear();
         printf("Case #%d:\n", ++cc);
         memset(t, 0, 4*n*sizeof(int));
-        FOR(i, 0, n) { scanf("%d", &a[i]); if(a[i] > 1) nexti.push_back(i);}
+        FOR(i, 0, n) { scanf("%lli", &a[i]); if(a[i] > 1) nexti.push_back(i);}
         build(1, 0, n-1);
 
         scanf("%d", &q);

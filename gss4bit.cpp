@@ -1,15 +1,14 @@
 /* Binary Indexex Tree implementation */
-/* WA */
 #include <bits/stdc++.h>
 #define FOR(i,a,b) for(int i = (a); i < (b); i++)
 #define ll long long
 #define MAXN 100010
 using namespace std;
 
+ll a[MAXN];
 ll t[MAXN];
-int a[MAXN];
 
-void update(int idx, int delta, int n)
+void update(int idx, ll delta, int n)
 {
     for(; idx < n; idx = idx|(idx+1)) t[idx] += delta;
 }
@@ -34,7 +33,7 @@ int main()
         nexti.clear();
         printf("Case #%d:\n", ++cc);
         memset(t, 0, n*sizeof(ll));
-        FOR(i, 0, n) { scanf("%d", &a[i]), update(i, a[i], n); if(a[i] > 1) nexti.push_back(i);}
+        FOR(i, 0, n) { scanf("%lli", &a[i]), update(i, a[i], n); if(a[i] > 1) nexti.push_back(i);}
 
         scanf("%d", &q);
         FOR(i, 0, q)

@@ -11,14 +11,6 @@ using namespace std;
 int a[MAXN], pre[2*MAXN];
 ll t[4*MAXN], best[4*MAXN], best_lazy[4*MAXN], lazy[4*MAXN];
 
-ll query(int v, int tl, int tr, int l, int r)
-{
-    if(l > r) return NEGINF;
-    if(tl == l && tr == r) return best[v];
-    int tm = (tl+tr)/2;
-    return max(query(v*2, tl, tm, l, min(r, tm)), query(v*2+1, tm+1, tr, max(l, tm+1), r));
-}
-
 void update_children(int v)
 {
     FOR(child, v*2, v*2+2)
@@ -29,6 +21,15 @@ void update_children(int v)
         t[child] += lazy[v];
     }
     lazy[v] = best_lazy[v] = 0;
+}
+
+ll query(int v, int tl, int tr, int l, int r)
+{
+    if(l > r) return NEGINF;
+    if(tl == l && tr == r) return best[v];
+    update_children(v);
+    int tm = (tl+tr)/2;
+    return max(query(v*2, tl, tm, l, min(r, tm)), query(v*2+1, tm+1, tr, max(l, tm+1), r));
 }
 
 void update(int v, int tl, int tr, int l, int r, int val)

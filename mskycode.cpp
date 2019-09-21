@@ -29,7 +29,7 @@ int main()
     {
         if(siev[i]) continue;
         primes[fin++]=i;
-        for(ll j=i*2;j<M;j++) siev[j]=1;
+        for(ll j=i*2;j<M;j+=i) siev[j]=1;
     }
     nc4[4]=1;
     FOR(i,5,M) nc4[i]=nc4[i-1]*i/(i-4);
